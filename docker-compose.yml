@@ -1,0 +1,24 @@
+version: '3'
+services:
+    api:
+        image: abhyadan/dev_mysql_ctf:latest
+        expose:
+            - "9450"
+        ports:
+            - "0.0.0.0:9450:9450"
+        environment:
+            - MYSQL_USER=root
+        links:
+            - mysqldb
+        command: sh -c "sleep 5; /run_ctf.sh"
+        depends_on:
+            - mysqldb
+    mysqldb:
+        image: mysql:5.7
+        environment:
+            - MYSQL_DATABASE=ptclogin
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+        expose:
+            - "3306"
+        ports:
+            - "0.0.0.0:3306:3306"
